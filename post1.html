@@ -1,0 +1,133 @@
+<html>
+<meta charset="utf-8">
+<body>
+	<p>I’ve been working on a tool at work for the past few months. It includes forms like these (label names changed):</p>
+	<img src="images/image04.png">
+	<p>The other day, someone in QA pointed out an ugly design flaw, and sent a screenshot:</p>
+	<img src="images/image05.png">
+	<p>I tried to recreate it, but couldn’t until I switched from Chrome to Firefox. In Firefox, I couldn’t not recreate it.</p>
+	<p>I dug and dug to find an answer, inspected all the elements, made sure box-sizing was set appropriately, checked for any missed -mozilla- or -webkit- flags. Nothing. The internet was at a loss.</p>
+	<p>So I set up a basic skeleton to build the simplest version that would break.</p>
+	<pre>&lt;html&gt;
+	&lt;head&gt;
+	&lt;/head&gt;
+	&lt;body&gt;
+		&lt;div class="parent"&gt;
+		&lt;/div&gt;
+
+		&lt;style&gt;
+			html, body, div {
+				margin: 0;
+				padding: 0;
+				border: 0;
+			}
+
+			div.parent {
+				border: 5px solid blue;
+				position: absolute;
+				height: 400px;
+				width: 800px;
+				top: 100px;
+				left: 100px;
+			}
+		&lt;/style&gt;
+	&lt;/body&gt;
+	&lt;/html&gt;</pre>
+
+	<p>This gives us a nice box to work with:</p>
+	<img src="images/image07.png">
+	​(same in Chrome and Firefox)
+
+	<p>Now we add some stuff to the inside:</p>
+	<pre>...
+		&lt;div class="parent"&gt;
+			&lt;div class="left-block"&gt;&lt;/div&gt;
+			&lt;div class="right-parent-block"&gt;
+				&lt;div class="align-left"&gt;&lt;/div&gt;
+				&lt;div class="align-right"&gt;&lt;/div&gt;
+			&lt;/div&gt;
+		&lt;/div&gt;
+	...
+			div.left-block {
+				float: left;
+				height: 60px;
+				width: 60px;
+				background: red;
+			}
+			div.right-parent-block {
+				height: 200px;
+				border: 5px solid green;
+				float: left;
+			}
+			div.align-left {
+				float: left;
+				height: 40px;
+				width: 40px;
+				background: cyan;
+			}
+
+			div.align-right {
+				float: right;
+				height: 40px;
+				width: 40px;
+				background: purple;
+				clear: right;
+				margin-bottom: 5px;
+			}
+	...</pre>
+
+	<p>This gives us this image in Chrome, as I expected:</p>
+	<img src="images/image01.png">
+	​
+	<p>My best guess until now had been that, in Firefox, the float:left and float:right of the inside was calculated first, pressing the ends of the green box against the ends of the blue box. But not so! This screenshot was the same in Chrome as in Firefox.</p>
+
+	<p>How curious. I looked back at the code that had generated the odd behavior in the first place, and decided to try adding a few more purple boxes, all floating on the right with clear right, and to give them text of increasing length, and to remove the width attribute from the styles:</p>
+
+
+	<pre>...
+				&lt;div class="align-right"&gt;Lorem ipsum dolor sit amet, consectetur &lt;/div&gt;
+				&lt;div class="align-right"&gt;Lorem ipsum dolor sit amet, consectetur &lt;/div&gt;
+				&lt;div class="align-right"&gt;Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incidid&lt;/div&gt;
+	...
+
+			div.align-right {
+				float: right;
+				height: 40px;
+				/*width: 40px;*/
+				background: purple;
+				clear: right;
+				margin-bottom: 5px;
+			}</pre>
+
+	<p>That did it:</p>
+	<p>Chrome:</p>
+	<img src="images/image00.png">
+
+	​<p>Firefox:</p>
+	<img src="images/image03.png">
+
+	​
+	<p>(Safari behaves the same as Chrome FWIW.)</p>
+
+	<p>It's not clear which one is "right". The internet likes to say that floats should have widths defined on them to avoid unexpected behavior, but obv that's not practical in many cases. In this case, it's important to me that the green box have a maximum width.</p>
+
+	<p>So let's see what happens when I fix it to the ceiling of the Chrome width:</p>
+	<pre>...
+			div.right-parent-block {
+				height: 200px;
+				border: 5px solid green;
+				float: left;
+				width: 573px;
+			}
+	...</pre>
+	<p>Chrome:</p>
+	<img src="images/image02.png">
+	​<p>Firefox:</p>
+	<img src="images/image06.png">
+	<p>This is good enough for my purposes now.</p>
+	<p>But it's pretty annoying setting a width. Part of the reason to use a float is to automatically get inline-block-style behavior, with widths taken down to their dynamic minimum.</p>
+	<p>Another option might be to set the cyan box to position:absolute (with a position:relative on the green box), but this causes the potential for the cyan and the purple to overlap, and in my case, since the bottom purple box shouldn't take up the entire width of the green box, it won't work at all for my purposes.</p>
+	<p>Another option would be to set the bottom two purple boxes to position:absolute (with a position:relative on the green box), and set their 'top' properties. Very inelegant!</p>
+	<p>Let me know if you think of anything that would work better in general.</p>
+</body>
+</html>
