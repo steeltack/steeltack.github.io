@@ -1,0 +1,13 @@
+---
+layout: default
+---
+{% assign author = site.authors[page.author] %}
+
+<header>
+  <h2>{{ page.title }}</h2>
+  <p class="meta">{{ page.category }} {{ page.date | date: "%Y-%m-%d" }}</p>
+</header>
+
+<div class="post">
+{{ content }}
+</div>
