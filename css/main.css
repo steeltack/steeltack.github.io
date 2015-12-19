@@ -1,0 +1,46 @@
+a,
+h3,
+h2,
+p {
+  font-family: 'EB Garamond', serif;
+}
+.wrapper {
+  background: white;
+  height: 1000px;
+  margin: 0 auto;
+  padding-top: 53px;
+  width: 50%;
+}
+.nav {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  padding: 10px 20px;
+}
+.nav a {
+  margin: 5px;
+  text-decoration: none;
+}
+h1 {
+  font-size: 61px;
+  margin-bottom: 43px;
+}
+h3 {
+  font-size: 25px;
+}
+p {
+  line-height: 38px;
+  letter-spacing: 1px;
+  font-size: 21px;
+  margin-bottom: 66px;
+}
+p:first-letter {
+  font-size: 20px;
+  font-weight: 500;
+  padding-right: 2px;
+}
+.footer {
+  background: #A9D7FF;
+  height: 74px;
+}
