@@ -56,6 +56,12 @@ p:first-letter {
   font-size: 21px;
 }
 
-img {
+img, pre {
   width: 100%;
+}
+
+pre {
+  border: 3px solid rgb(70,70,70);
+  white-space: pre-wrap;
+
 }
