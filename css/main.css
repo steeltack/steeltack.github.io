@@ -1,7 +1,7 @@
 a, h3, h2, p, h1 {
   font-family: 'EB Garamond', serif;
 }
-.wrapper {
+main {
   background: white;
   height: 1000px;
   margin: 0 auto;

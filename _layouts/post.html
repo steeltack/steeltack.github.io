@@ -3,11 +3,9 @@ layout: default
 ---
 {% assign author = site.authors[page.author] %}
 
-<header>
-  <h2>{{ page.title }}</h2>
-  <p class="meta">{{ page.category }} {{ page.date | date: "%Y-%m-%d" }}</p>
-</header>
+<h1>{{ page.title }}</h1>
+<p class="meta">{{ page.category }} {{ page.date | date: "%Y-%m-%d" }}</p>
 
-<div class="post">
+<p class="post">
 {{ content }}
-</div>
+</p>
