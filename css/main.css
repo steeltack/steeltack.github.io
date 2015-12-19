@@ -55,3 +55,7 @@ p:first-letter {
 .post {
   font-size: 21px;
 }
+
+img {
+  width: 100%;
+}
