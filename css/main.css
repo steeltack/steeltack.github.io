@@ -1,9 +1,15 @@
-a, h3, h2, p, h1 {
+a, h3, h2, p, h1, span, ul, li, main {
+  font: inherit;
+  border: 0;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+body {
   font-family: 'EB Garamond', serif;
 }
 main {
   background: white;
-  height: 1000px;
   margin: 0 auto;
   padding-top: 53px;
   width: 50%;
@@ -40,4 +46,12 @@ p:first-letter {
 .footer {
   background: #A9D7FF;
   height: 74px;
+}
+
+.date, .post {
+  display: block;
+}
+
+.post {
+  font-size: 21px;
 }
