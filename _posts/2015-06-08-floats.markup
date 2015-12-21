@@ -4,6 +4,8 @@ author: KC
 layout: post
 ---
 
+<h2>Originally an e-mail to Zak</h2>
+
 <p>I’ve been working on a tool at work for the past few months. It includes forms like these (label names changed):</p>
 <img src="assets/image04.png">
 <p>The other day, someone in QA pointed out an ugly design flaw, and sent a screenshot:</p>
